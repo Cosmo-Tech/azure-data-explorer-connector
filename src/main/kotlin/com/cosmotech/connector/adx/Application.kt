@@ -7,12 +7,13 @@ import java.nio.file.Paths
 
 fun main() {
 
+/*    // Minimal how-to
     // Working test directory
     val testTempFolder = "/tmp/AzureStorageConnector"
     Files.createDirectories(Paths.get(testTempFolder))
 
     // Construct simple data
-    val csvData = mutableMapOf("https://adtstorageadx.blob.core.windows.net/csv/2021%2F2%2F2%2F9%2F14%2F54%2FTest1.csv" to
+    val csvData = mutableMapOf("https://samplestorage.blob.core.windows.net/csv/2021%2F2%2F2%2F9%2F14%2F54%2FTest1.csv" to
         CsvData(
             "Test1",
             mutableMapOf("column1" to "string", "column2" to "datetime", "column3" to "int"),
@@ -23,7 +24,7 @@ fun main() {
             ),
             testTempFolder,
         ),
-        "https://adtstorageadx.blob.core.windows.net/csv/2021%2F2%2F2%2F9%2F14%2F54%2FTest2.csv" to
+        "https://samplestorage.blob.core.windows.net/csv/2021%2F2%2F2%2F9%2F14%2F54%2FTest2.csv" to
         CsvData(
             "Test2",
             mutableMapOf("column4" to "string", "column5" to "datetime", "column6" to "int"),
@@ -36,6 +37,6 @@ fun main() {
         )
     )
 
-    AzureDataExplorerConnector(csvData).process()
+    AzureDataExplorerConnector(csvData).process()*/
 
 }
