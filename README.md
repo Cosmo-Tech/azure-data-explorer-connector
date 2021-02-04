@@ -30,9 +30,21 @@ If you want to overwrite these properties, you can write your own property value
 - AZURE_STORAGE_SHARED_ACCESS_SIGNATURE_SERVICES : the SAS Token services (should be the most restrictive possible)
 - AZURE_STORAGE_SHARED_ACCESS_SIGNATURE_RESOURCE_TYPES :the SAS Token resource types (should be the most restrictive possible)
 
+
+## POM.xml dependency
+
 ```
-  <dependency>
-      <groupId>com.cosmotech</groupId>
+<dependency>
+  <groupId>com.cosmotech</groupId>
+  <artifactId>azure-data-explorer-connector</artifactId>
+  <version>1.0-SNAPSHOT</version>
+</dependency>
+
+```
+or 
+```
+    <dependency>
+      <groupId>com.github.Cosmo-Tech</groupId>
       <artifactId>azure-data-explorer-connector</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
