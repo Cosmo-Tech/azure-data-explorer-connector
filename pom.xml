@@ -98,7 +98,7 @@
       <version>${com.beust.klaxon.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.smallrye</groupId>
+      <groupId>io.smallrye.config</groupId>
       <artifactId>smallrye-config</artifactId>
       <version>${smallrye-config.version}</version>
     </dependency>
