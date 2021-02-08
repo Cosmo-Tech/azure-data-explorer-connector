@@ -31,7 +31,7 @@ If you want to overwrite these properties, you can write your own property value
 - AZURE_STORAGE_SHARED_ACCESS_SIGNATURE_RESOURCE_TYPES :the SAS Token resource types (should be the most restrictive possible)
 
 
-## POM.xml dependency
+## How-to
 
 ```
 <dependency>
@@ -49,3 +49,12 @@ or
       <version>1.0-SNAPSHOT</version>
     </dependency>
 ```
+
+## Tasks :
+
+- [ ] Add more logs (maybe with some metrics)
+- [ ] Add unit tests
+- [ ] Tables bulk creation
+- [ ] Data bulk ingestion
+- [ ] Manage creation response correctly
+- [ ] Manage ingestion response correctly
