@@ -55,6 +55,7 @@ or
 - [ ] Add more logs (maybe with some metrics)
 - [ ] Add unit tests
 - [ ] Tables bulk creation
+- [ ] Use IngestionMapping and try to manage "update schema" for existing tables
 - [ ] Data bulk ingestion
 - [ ] Manage creation response correctly
 - [ ] Manage ingestion response correctly
