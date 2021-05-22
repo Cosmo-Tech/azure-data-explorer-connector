@@ -79,8 +79,13 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
         val source = FileSourceInfo(
           file,
           size)
+        var ordinal = 0
         val columnMapping = csvData.headerNameAndType.map { (col, type) ->
-          ColumnMapping(col, type)
+          val colmap = ColumnMapping(col, type)
+          colmap.setOrdinal(ordinal)
+          ordinal++
+          return@map colmap
+
         }.toTypedArray()
         val ingestionMapping = IngestionMapping(
           columnMapping,
@@ -90,7 +95,7 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
           databaseName,
           csvData.fileName)
         prop.setIngestionMapping(ingestionMapping)
-        // prop.setAdditionalProperties(mutableMapOf("ignoreFirstRecord" to "true"))
+        prop.setAdditionalProperties(mutableMapOf("ignoreFirstRecord" to "true"))
         LOGGER.info("Ingesting file")
         ingestClient.ingestFromFile(source, prop)
       }
