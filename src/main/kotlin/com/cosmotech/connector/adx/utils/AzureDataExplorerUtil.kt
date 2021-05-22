@@ -30,6 +30,15 @@ class AzureDataExplorerUtil {
             )
         }
 
+        fun getConnectionStringIngest(): ConnectionStringBuilder? {
+            return ConnectionStringBuilder.createWithAadApplicationCredentials(
+                getResourceUriIngest(),
+                getApplicationClientId(),
+                getApplicationKey(),
+                getAuthorityId()
+            )
+        }
+
         /** Get the Shared Access Signature */
         @JvmStatic
         fun getSharedAccessSignature(): String {
@@ -126,6 +135,12 @@ class AzureDataExplorerUtil {
         @JvmStatic
         private fun getResourceUri(): String {
             return configuration.getValue(ADX_RESOURCE_URI_KEY, String::class.java)
+        }
+
+        /** Get the resource URI */
+        @JvmStatic
+        private fun getResourceUriIngest(): String {
+            return configuration.getValue(ADX_RESOURCE_INGEST_URI_KEY, String::class.java)
         }
 
         /** Get the Database name */

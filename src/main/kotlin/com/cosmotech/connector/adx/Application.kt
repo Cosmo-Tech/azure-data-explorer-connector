@@ -38,5 +38,17 @@ fun main() {
     )
 
     AzureDataExplorerConnector(csvData).process()*/
+    val csvData = mapOf("/tmp/adt/Bar.csv" to
+        CsvData(
+            fileName = "Bar",
+            headerNameAndType = mutableMapOf(
+              "NbWaiters" to "string",
+              "RestockQty" to "string",
+              "Stock" to "string",
+              "_id" to "string"),
+            rows = mutableListOf(),
+        ),
+      )
+    AzureDataExplorerConnector(csvData).process()
 
 }

@@ -27,6 +27,9 @@ const val SCHEMA_AS_JSON_SUFFIX = " schema as json"
 /** Environment variable in which the ADX Cluster endpoint is stored */
 const val ADX_RESOURCE_URI_KEY = "azure.data.explorer.resource.uri"
 
+/** Environment variable in which the ADX Cluster ingest endpoint is stored */
+const val ADX_RESOURCE_INGEST_URI_KEY = "azure.data.explorer.resource.ingest.uri"
+
 /** Environment variable in which the ADX Cluster endpoint is stored */
 const val ADX_APP_ID_KEY = "azure.data.explorer.app.id"
 

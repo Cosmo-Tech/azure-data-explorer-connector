@@ -4,13 +4,22 @@ import com.cosmotech.connector.adx.AzureDataExplorerQueries
 import com.cosmotech.connector.adx.extensions.toShowTableQuery
 import com.cosmotech.connector.adx.utils.AzureDataExplorerUtil
 import com.cosmotech.connector.adx.utils.AzureDataExplorerUtil.Builder.getConnectionString
+import com.cosmotech.connector.adx.utils.AzureDataExplorerUtil.Builder.getConnectionStringIngest
 import com.cosmotech.connector.adx.utils.AzureDataExplorerUtil.Builder.getDatabaseName
 import com.cosmotech.connector.commons.Connector
 import com.cosmotech.connector.commons.pojo.CsvData
+import com.microsoft.azure.kusto.ingest.IngestClient
+import com.microsoft.azure.kusto.ingest.IngestClientFactory
+import com.microsoft.azure.kusto.ingest.IngestionProperties
+import com.microsoft.azure.kusto.ingest.IngestionMapping
+import com.microsoft.azure.kusto.ingest.IngestionMapping.IngestionMappingKind
+import com.microsoft.azure.kusto.ingest.ColumnMapping
+import com.microsoft.azure.kusto.ingest.source.FileSourceInfo
 import com.microsoft.azure.kusto.data.Client
 import com.microsoft.azure.kusto.data.ClientFactory
 import java.util.logging.Level
 import java.util.logging.Logger
+import java.io.File
 
 /**
  * Connector for Azure Data Explorer
@@ -47,15 +56,44 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
             .forEach {
                     (storageUrl, csvData) -> insertQueryData[csvData.fileName] = storageUrl
             }
-        return AzureDataExplorerQueries(createQueryData,insertQueryData)
+        return AzureDataExplorerQueries(createQueryData, insertQueryData)
     }
 
     override fun process() {
         val adxQueries = prepare(adxClient)
-        val sharedAccessSignature = AzureDataExplorerUtil.getSharedAccessSignature()
+        // val sharedAccessSignature = AzureDataExplorerUtil.getSharedAccessSignature()
         val databaseName = getDatabaseName()
         this.createTables(databaseName,adxQueries.create)
-        this.insertTables(databaseName,adxQueries.insert,sharedAccessSignature)
+        // this.insertTables(databaseName,adxQueries.insert,sharedAccessSignature)
+
+        this.directIngest(databaseName)
+    }
+
+    private fun directIngest(databaseName: String) {
+      val ingestClient = IngestClientFactory.createClient(getConnectionStringIngest())
+      LOGGER.info("Size: ${storageData.size}")
+      storageData.forEach {(file, csvData) -> 
+        LOGGER.info("${databaseName} - ${csvData.fileName}: ${file}")
+        val f = File(file)
+        val size = f.length()
+        val source = FileSourceInfo(
+          file,
+          size)
+        val columnMapping = csvData.headerNameAndType.map { (col, type) ->
+          ColumnMapping(col, type)
+        }.toTypedArray()
+        val ingestionMapping = IngestionMapping(
+          columnMapping,
+          IngestionMappingKind.Csv
+        )
+        val prop = IngestionProperties(
+          databaseName,
+          csvData.fileName)
+        prop.setIngestionMapping(ingestionMapping)
+        // prop.setAdditionalProperties(mutableMapOf("ignoreFirstRecord" to "true"))
+        LOGGER.info("Ingesting file")
+        ingestClient.ingestFromFile(source, prop)
+      }
     }
 
     /**
