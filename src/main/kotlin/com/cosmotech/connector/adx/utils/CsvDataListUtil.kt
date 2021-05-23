@@ -15,9 +15,10 @@ class CsvDataListUtil {
           file.name.endsWith(".csv") }
         .forEach { file ->
           LOGGER.info("File: ${file}")
-          val data = file.readText(Charsets.UTF_8)
-          LOGGER.info("file content:")
-          LOGGER.info(data)
+          // To debug file content
+          // val data = file.readText(Charsets.UTF_8)
+          // LOGGER.info("file content:")
+          // LOGGER.info(data)
           var header: String? = file.bufferedReader().readLine()
           if (header == null) {
             LOGGER.warning("Empty file ${file.path}")
