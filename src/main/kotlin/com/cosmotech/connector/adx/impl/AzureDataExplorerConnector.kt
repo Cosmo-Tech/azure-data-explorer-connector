@@ -21,6 +21,7 @@ import java.util.logging.Level
 import java.util.logging.Logger
 import java.io.File
 
+const val SCENARIORUN_COL = "SimulationRun"
 /**
  * Connector for Azure Data Explorer
  */
@@ -48,6 +49,7 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
         storageData
             .values
             .forEach {
+                // the SimulatioRun does not need to be added here, it will be automatically added during upload in direct mode
                 createQueryData[it.fileName] = it.headerNameAndType
             }
         val insertQueryData = mutableMapOf<String,String>()
@@ -61,12 +63,16 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
 
     override fun process() {
         val adxQueries = prepare(adxClient)
-        // val sharedAccessSignature = AzureDataExplorerUtil.getSharedAccessSignature()
         val databaseName = getDatabaseName()
         this.createTables(databaseName,adxQueries.create)
-        // this.insertTables(databaseName,adxQueries.insert,sharedAccessSignature)
-
-        this.directIngest(databaseName)
+        val mode = AzureDataExplorerUtil.getSendMode()
+        if (mode.isPresent && mode.get() == "storage") {
+          val sharedAccessSignature = AzureDataExplorerUtil.getSharedAccessSignature()
+          this.insertTables(databaseName,adxQueries.insert,sharedAccessSignature)
+        } else {
+          // Default mode is direct ingest (which go through a temp Azure Storage uner the hood)
+          this.directIngest(databaseName)
+        }
     }
 
     private fun directIngest(databaseName: String) {
@@ -80,13 +86,18 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
           file,
           size)
         var ordinal = 0
-        val columnMapping = csvData.headerNameAndType.map { (col, type) ->
+        val columnMap = csvData.headerNameAndType.map { (col, type) ->
           val colmap = ColumnMapping(col, type)
           colmap.setOrdinal(ordinal)
           ordinal++
           return@map colmap
 
-        }.toTypedArray()
+        }.toMutableList()
+        // Adding the SimulationRun column and constant value
+        val simulationRunCol = ColumnMapping("simulationrun", "string")
+        simulationRunCol.setConstantValue(AzureDataExplorerUtil.getSimulationId())
+        columnMap.add(simulationRunCol)
+        val columnMapping = columnMap.toTypedArray()
         val ingestionMapping = IngestionMapping(
           columnMapping,
           IngestionMappingKind.Csv

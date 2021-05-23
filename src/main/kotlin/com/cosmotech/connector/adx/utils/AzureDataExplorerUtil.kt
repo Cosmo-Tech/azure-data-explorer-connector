@@ -6,6 +6,7 @@ import com.cosmotech.connector.adx.extensions.toADXType
 import com.microsoft.azure.kusto.data.ConnectionStringBuilder
 import org.eclipse.microprofile.config.Config
 import org.eclipse.microprofile.config.ConfigProvider
+import java.util.Optional
 
 /**
  * Utility class to manage Azure storage / data explorer interactions
@@ -133,6 +134,24 @@ class AzureDataExplorerUtil {
 
         /** Get the resource URI */
         @JvmStatic
+        fun getDatasetPath(): Optional<String> {
+            return configuration.getOptionalValue(CSM_DATASET_ABSOLUTE_PATH, String::class.java)
+        }
+
+        /** Get the resource URI */
+        @JvmStatic
+        fun getParametersPath(): Optional<String> {
+            return configuration.getOptionalValue(CSM_PARAMETERS_ABSOLUTE_PATH, String::class.java)
+        }
+
+        /** Get the Simulation Id */
+        @JvmStatic
+        fun getSimulationId(): String {
+            return configuration.getValue(CSM_SIMULATION_ID, String::class.java)
+        }
+
+        /** Get the resource URI */
+        @JvmStatic
         private fun getResourceUri(): String {
             return configuration.getValue(ADX_RESOURCE_URI_KEY, String::class.java)
         }
@@ -147,6 +166,12 @@ class AzureDataExplorerUtil {
         @JvmStatic
         fun getDatabaseName(): String {
             return configuration.getValue(ADX_DATABASE_NAME_KEY, String::class.java)
+        }
+
+        /** Get the send mode*/
+        @JvmStatic
+        fun getSendMode(): Optional<String> {
+            return configuration.getOptionalValue(SEND_MODE, String::class.java)
         }
 
         /** Get the SAS token duration */
@@ -171,5 +196,6 @@ class AzureDataExplorerUtil {
         private fun getTokenPermissions(): String {
             return configuration.getValue(AZURE_STORAGE_SAS_PERMISSIONS_KEY, String::class.java)
         }
+
     }
 }

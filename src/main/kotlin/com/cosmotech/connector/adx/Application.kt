@@ -1,6 +1,8 @@
 package com.cosmotech.connector.adx
 
 import com.cosmotech.connector.adx.impl.AzureDataExplorerConnector
+import com.cosmotech.connector.adx.utils.AzureDataExplorerUtil
+import com.cosmotech.connector.adx.utils.CsvDataListUtil
 import com.cosmotech.connector.commons.pojo.CsvData
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -38,7 +40,7 @@ fun main() {
     )
 
     AzureDataExplorerConnector(csvData).process()*/
-    val csvData = mapOf(
+    /*val csvData = mapOf(
         "/tmp/adt/Bar.csv" to
         CsvData(
             fileName = "Bar",
@@ -60,6 +62,18 @@ fun main() {
             rows = mutableListOf(),
         ),
       )
+      */
+    var csvData: MutableMap<String, CsvData> = mutableMapOf()
+    val datasetPath = AzureDataExplorerUtil.getDatasetPath()
+    if (datasetPath.isPresent) {
+      CsvDataListUtil.addCsv(datasetPath.get(), csvData)
+    }
+
+    val parametersPath = AzureDataExplorerUtil.getParametersPath()
+    if (parametersPath.isPresent) {
+      CsvDataListUtil.addCsv(parametersPath.get(), csvData)
+    }
+
     AzureDataExplorerConnector(csvData).process()
 
 }

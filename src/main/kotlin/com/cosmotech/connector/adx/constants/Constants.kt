@@ -7,8 +7,27 @@ package com.cosmotech.connector.adx.constants
 /** Environment variable in which the Azure tenant is stored */
 const val AZURE_TENANT_ID_KEY = "azure.tenant.id"
 
-/** Environment variable in which the Azure tenant is stored */
+/** Environment variable in which the Azure client id is stored */
 const val AZURE_CLIENT_ID_KEY = "azure.client.id"
+
+/** Environment variable in which the Azure client secret is stored */
+const val ADX_APP_ID_KEY = "azure.client.secret"
+
+/** Optional send mode option: direct or storage. Default is direct */
+const val SEND_MODE = "send.mode"
+
+/** The Cosmo Tech Simulation Id used in each rows (direct mode only) */
+const val CSM_SIMULATION_ID = "csm.simulation.id"
+
+// ############################
+// ## Cosmo Tech optional path
+// ############################
+
+/** Absolute path to Datasets */
+const val CSM_DATASET_ABSOLUTE_PATH = "csm.dataset.absolute.path"
+
+/** Absolute path to Parameters */
+const val CSM_PARAMETERS_ABSOLUTE_PATH = "csm.parameters.absolute.path"
 
 
 // ############################
@@ -29,9 +48,6 @@ const val ADX_RESOURCE_URI_KEY = "azure.data.explorer.resource.uri"
 
 /** Environment variable in which the ADX Cluster ingest endpoint is stored */
 const val ADX_RESOURCE_INGEST_URI_KEY = "azure.data.explorer.resource.ingest.uri"
-
-/** Environment variable in which the ADX Cluster endpoint is stored */
-const val ADX_APP_ID_KEY = "azure.data.explorer.app.id"
 
 /** Environment variable in which the ADX targeted database name is stored */
 const val ADX_DATABASE_NAME_KEY = "azure.data.explorer.database.name"
