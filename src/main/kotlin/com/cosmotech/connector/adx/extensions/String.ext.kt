@@ -11,7 +11,7 @@ fun String.toShowTableQuery(): String {
 }
 
 fun String.toADXType():String {
-    val typeLowerCased = this.toLowerCase()
+    val typeLowerCased = this.lowercase()
     if (typeLowerCased == "integer") return "int"
     if (typeLowerCased == "compositetype") return "string"
     return typeLowerCased
