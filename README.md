@@ -6,9 +6,11 @@ The aim of this project is to ingest data into ADX using CSV files stored into a
 Here is the list of properties that should be changed (in ```META-INF/microprofile-config.properties``` file):
 * Send mode: 'direct' (default) or 'storage':
 - send.mode
-* Optional absolute path for parameters and datasets
+* Optional parameters for parameters and datasets
 - csm.dataset.absolute.path
 - csm.parameters.absolute.path
+- csm.send.datawarehouse.parameters
+- csm.send.datawarehouse.datasets
 * Mandatory for direct mode:
 - azure.tenant.id
 - azure.client.id
@@ -30,6 +32,8 @@ If you want to overwrite these properties, you can write your own property value
 - SEND_MODE: the send mode, direct (default) or storage
 - CSM_DATASET_ABSOLUTE_PATH: The dataset absolute path
 - CSM_PARAMETERS_ABSOLUTE_PATH: The parameters absolute path
+- CSM_SEND_DATAWAREHOUSE_PARAMETERS: whether or not to send parameters (parameters path is mandatory then)
+- CSM_SEND_DATAWAREHOUSE_DATASETS: whether or not to send datasets (datasets path is mandatory then)
 - AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI : the ADX cluster ingest path (URI info can be found into ADX cluster page)
 - AZURE_DATA_EXPLORER_RESOURCE_URI : the ADX cluster path (URI info can be found into ADX cluster page)
 - AZURE_TENANT_ID : the Azure Tenant id (can be found under the App registration screen)

@@ -29,6 +29,12 @@ const val CSM_DATASET_ABSOLUTE_PATH = "csm.dataset.absolute.path"
 /** Absolute path to Parameters */
 const val CSM_PARAMETERS_ABSOLUTE_PATH = "csm.parameters.absolute.path"
 
+/** Wheter or not to send Parameters to ADX */
+const val CSM_SEND_DATAWAREHOUSE_PARAMETERS_VAR = "csm.send.datawarehouse.parameters"
+
+/** Wheter or not to send Datasets to ADX */
+const val CSM_SEND_DATAWAREHOUSE_DATASETS_VAR = "csm.send.datawarehouse.datasets"
+
 
 // ############################
 // ## Azure Data Explorer

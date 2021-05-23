@@ -134,14 +134,26 @@ class AzureDataExplorerUtil {
 
         /** Get the resource URI */
         @JvmStatic
-        fun getDatasetPath(): Optional<String> {
-            return configuration.getOptionalValue(CSM_DATASET_ABSOLUTE_PATH, String::class.java)
+        fun getDatasetPath(): String {
+            return configuration.getValue(CSM_DATASET_ABSOLUTE_PATH, String::class.java)
         }
 
         /** Get the resource URI */
         @JvmStatic
-        fun getParametersPath(): Optional<String> {
-            return configuration.getOptionalValue(CSM_PARAMETERS_ABSOLUTE_PATH, String::class.java)
+        fun getParametersPath(): String {
+            return configuration.getValue(CSM_PARAMETERS_ABSOLUTE_PATH, String::class.java)
+        }
+
+        /** Get the resource URI */
+        @JvmStatic
+        fun getSendParameters(): Optional<String> {
+            return configuration.getOptionalValue(CSM_SEND_DATAWAREHOUSE_PARAMETERS_VAR, String::class.java)
+        }
+
+        /** Get the resource URI */
+        @JvmStatic
+        fun getSendDatasets(): Optional<String> {
+            return configuration.getOptionalValue(CSM_SEND_DATAWAREHOUSE_DATASETS_VAR, String::class.java)
         }
 
         /** Get the Simulation Id */

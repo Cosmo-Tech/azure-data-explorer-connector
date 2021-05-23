@@ -64,14 +64,14 @@ fun main() {
       )
       */
     var csvData: MutableMap<String, CsvData> = mutableMapOf()
-    val datasetPath = AzureDataExplorerUtil.getDatasetPath()
-    if (datasetPath.isPresent) {
-      CsvDataListUtil.addCsv(datasetPath.get(), csvData)
+    val sendDatasets = AzureDataExplorerUtil.getSendDatasets()
+    if (sendDatasets.isPresent && sendDatasets.get().lowercase() == "true") {
+        CsvDataListUtil.addCsv(AzureDataExplorerUtil.getDatasetPath(), csvData)
     }
 
-    val parametersPath = AzureDataExplorerUtil.getParametersPath()
-    if (parametersPath.isPresent) {
-      CsvDataListUtil.addCsv(parametersPath.get(), csvData)
+    val sendParameters = AzureDataExplorerUtil.getSendParameters()
+    if (sendParameters.isPresent && sendParameters.get().lowercase() == "true") {
+      CsvDataListUtil.addCsv(AzureDataExplorerUtil.getParametersPath(), csvData)
     }
 
     AzureDataExplorerConnector(csvData).process()
