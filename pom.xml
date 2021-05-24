@@ -18,7 +18,7 @@
     <com.beust.klaxon.version>5.5</com.beust.klaxon.version>
     <apache.commons-io.version>2.8.0</apache.commons-io.version>
     <simulator-connector-commons.version>0.2.1</simulator-connector-commons.version>
-    <smallrye-config.version>1.5.0</smallrye-config.version>
+    <smallrye-config.version>2.3.0</smallrye-config.version>
     <!-- Azure -->
     <azure-identity.version>1.0.1</azure-identity.version>
     <kusto-data.version>2.4.1</kusto-data.version>
