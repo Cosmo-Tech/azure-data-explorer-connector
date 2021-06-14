@@ -179,10 +179,6 @@
           </from>
           <to>
             <image>localhost:5000/azure-data-explorer-connector</image>
-            <tags>
-              <tag>latest</tag>
-              <tag>${project.version}</tag>
-            </tags>
           </to>
         </configuration>
       </plugin>
