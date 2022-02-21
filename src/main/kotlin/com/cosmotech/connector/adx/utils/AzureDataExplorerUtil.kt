@@ -94,9 +94,9 @@ class AzureDataExplorerUtil {
             ignoreFirstRecord: Boolean = true
         ): List<String> {
             val result = mutableListOf<String>()
-
+            val simulationId = AzureDataExplorerUtil.getSimulationId()
             insertDataInformation.forEach { (tableName, storageUrl) ->
-                result.add(".ingest into table $tableName (h'$storageUrl?$sasKey') with (ignoreFirstRecord=$ignoreFirstRecord)")
+                result.add(".ingest into table $tableName (h'$storageUrl?$sasKey') with (ignoreFirstRecord=$ignoreFirstRecord, tags='[\"drop-by:$simulationId\"]')")
             }
             return result
         }

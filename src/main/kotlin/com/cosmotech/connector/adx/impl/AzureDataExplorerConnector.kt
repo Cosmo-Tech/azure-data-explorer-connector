@@ -95,7 +95,7 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
         }.toMutableList()
         // Adding the SimulationRun column and constant value
         val simulationRunCol = ColumnMapping("simulationrun", "string")
-        simulationRunCol.setConstantValue(AzureDataExplorerUtil.getSimulationId())
+        simulationRunCol.constantValue = AzureDataExplorerUtil.getSimulationId()
         columnMap.add(simulationRunCol)
         val columnMapping = columnMap.toTypedArray()
         val ingestionMapping = IngestionMapping(
@@ -105,8 +105,9 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
         val prop = IngestionProperties(
           databaseName,
           csvData.fileName)
-        prop.setIngestionMapping(ingestionMapping)
-        prop.setAdditionalProperties(mutableMapOf("ignoreFirstRecord" to "true"))
+          prop.ingestionMapping = ingestionMapping
+          prop.dropByTags = arrayListOf<String>(AzureDataExplorerUtil.getSimulationId())
+          prop.setAdditionalProperties(mutableMapOf("ignoreFirstRecord" to "true"))
         LOGGER.info("Ingesting file")
         ingestClient.ingestFromFile(source, prop)
       }
