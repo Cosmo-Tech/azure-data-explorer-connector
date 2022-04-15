@@ -9,12 +9,12 @@ class CsvDataListUtil {
     val LOGGER: Logger = Logger.getLogger(CsvDataListUtil::class.simpleName)
     @JvmStatic
     fun addCsv(path: String, datas: MutableMap<String, CsvData>) {
-      println("path: ${path}")
+      // println("path: ${path}")
       File(path).walk()
         .filter { file -> println(file.toString())
           file.name.endsWith(".csv") }
         .forEach { file ->
-          LOGGER.info("File: ${file}")
+          LOGGER.fine("File: ${file}")
           // To debug file content
           // val data = file.readText(Charsets.UTF_8)
           // LOGGER.info("file content:")
@@ -25,7 +25,7 @@ class CsvDataListUtil {
           } else {
             // Replace specific Cosmo Tech prefix
             header = header.replace("@","")
-            LOGGER.info("Header line:${header}")
+            LOGGER.fine("Header line:${header}")
             val headers = if (header != null) header.split(",") else listOf()
             // Filename will be used as table name so in fact it is file witout extension we want here
             val cols: MutableMap<String, String> = headers.associateWith { "string" }.toMutableMap<String, String>()
@@ -36,7 +36,7 @@ class CsvDataListUtil {
               exportDirectory = "",
             )
 
-            LOGGER.info("Add ${file.path} to ${csvData.toString()}")
+            LOGGER.fine("Add ${file.path} to ${csvData.toString()}")
             datas.put(file.path, csvData)
           }
         }

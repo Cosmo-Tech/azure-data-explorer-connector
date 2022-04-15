@@ -77,9 +77,9 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
 
     private fun directIngest(databaseName: String) {
       val ingestClient = IngestClientFactory.createClient(getConnectionStringIngest())
-      LOGGER.info("Size: ${storageData.size}")
+      LOGGER.fine("Size: ${storageData.size}")
       storageData.forEach {(file, csvData) -> 
-        LOGGER.info("${databaseName} - ${csvData.fileName}: ${file}")
+        LOGGER.fine("${databaseName} - ${csvData.fileName}: ${file}")
         val f = File(file)
         val size = f.length()
         val source = FileSourceInfo(
@@ -128,7 +128,7 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
             val response = adxClient.execute(databaseName, tableName.toShowTableQuery())
             //TODO handle response correctly
             if (!response.resultTables.first().data.isNullOrEmpty()) {
-                LOGGER.info("The following query has created the table (or the table was here before): \n$createQuery ")
+                LOGGER.fine("The following query has created the table (or the table was here before): \n$createQuery ")
             } else {
                 LOGGER.log(Level.SEVERE,"Something went wrong with the following query: \n$createQuery")
             }
@@ -149,7 +149,7 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
         insertQueries.forEach {
             val kustoOperationResult = adxClient.execute(databaseName, it)
             kustoOperationResult.primaryResults
-            LOGGER.info("The following query has been launched: \n$it ")
+            LOGGER.fine("The following query has been launched: \n$it ")
         }
     }
 
