@@ -23,7 +23,7 @@
     <azure-identity.version>1.0.1</azure-identity.version>
     <kusto-data.version>2.4.1</kusto-data.version>
     <kusto-ingest.version>2.4.1</kusto-ingest.version>
-    <azure-storage-blob.version>12.10.0</azure-storage-blob.version>
+    <azure-storage-blob.version>12.17.1</azure-storage-blob.version>
   </properties>
 
   <repositories>
