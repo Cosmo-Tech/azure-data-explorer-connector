@@ -13,4 +13,4 @@ docker run \
 -e CSM_SIMULATION_ID="$(printenv CSM_SIMULATION_ID)" \
 -e CSM_SEND_DATAWAREHOUSE_PARAMETERS="$(printenv CSM_SEND_DATAWAREHOUSE_PARAMETERS)" \
 -e CSM_SEND_DATAWAREHOUSE_DATASETS="$(printenv CSM_SEND_DATAWAREHOUSE_DATASETS)" \
-azure-data-explorer-connector:1.0.2
+azure-data-explorer-connector:1.0.3
