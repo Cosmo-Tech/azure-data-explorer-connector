@@ -123,6 +123,7 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
         val createQueries = AzureDataExplorerUtil.constructCreateQueries(tableInformation)
         //TODO batch creation
         createQueries.forEach{ (tableName, createQuery) ->
+            LOGGER.info("Create table query: $createQuery")
             adxClient.execute(databaseName, createQuery)
             LOGGER.info("Create table $tableName")
             val response = adxClient.execute(databaseName, tableName.toShowTableQuery())
@@ -147,6 +148,7 @@ class AzureDataExplorerConnector(private val storageData:Map<String,CsvData>): C
         //TODO handle response correctly: check the flag HasErrors in response
         //TODO batch ingestion
         insertQueries.forEach {
+            LOGGER.info("Insert table query: $it")
             val kustoOperationResult = adxClient.execute(databaseName, it)
             kustoOperationResult.primaryResults
             LOGGER.info("The following query has been launched: \n$it ")
