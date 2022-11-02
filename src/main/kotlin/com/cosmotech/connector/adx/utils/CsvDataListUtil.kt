@@ -28,7 +28,11 @@ class CsvDataListUtil {
             LOGGER.info("Header line:${header}")
             val headers = if (header != null) header.split(",") else listOf()
             // Filename will be used as table name so in fact it is file witout extension we want here
-            val cols: MutableMap<String, String> = headers.associateWith { "string" }.toMutableMap<String, String>()
+            val cols: MutableMap<String, String> = headers
+              .map { it.removeSurrounding("\"","\"") }
+              .map { it.removeSurrounding("\'","\'") }
+              .associateWith { "string" }
+              .toMutableMap<String, String>()
             val csvData = CsvData(
               fileName = file.nameWithoutExtension,
               headers = cols,
